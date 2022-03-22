@@ -47,88 +47,115 @@ public class Loops extends PApplet {
 		switch (mode) {
 			case 0:
 				background(0);
+				//Creates an integer based on the position of mouse within window
+				//ie X = 500, 500/20 = 25 bars
 				int bars = (int) (mouseX / 20.0f);
+				//Width of bars = Width of Screen / Amount of Bars
 				float w = width / (float) bars;
+
 				for (int i = 0; i < bars; i++) {
 					noStroke();
+					// map(a, b, c, d, e);
+					// a = Input Value
+					// b, c - start and end of the first range
+					// d, e - start and and of the end range
 					fill(map(i, 0, bars, 0, 255), 255, 255);
 					rect(map(i, 0, bars, 0, 500), 0, w, height);
 				}
+
 				break;
-			case 1: {
+			
+			case 1:
 				background(0);
-				int squares = (int) (mouseX / 20.0f);
+				int squares = (int) (mouseX / 20.f);
 				float h = width / (float) squares;
+
 				for (int i = 0; i < squares; i++) {
 					noStroke();
 					fill(map(i, 0, squares, 0, 255), 255, 255);
 					float x = map(i, 0, squares, 0, width);
 					rect(x, x, h, h);
 					rect((width - h) - x, x, h, h);
+
 				}
-			}
+
 				break;
+
 			case 2:
-				background(255);
-				int circles = (int) (mouseX / 20.0f);
-				offset += (mouseY / 100.0f);
-				float d = width / (float) circles;
-				for (int j = 0; j < circles; j++) {
-					for (int i = 0; i < circles; i++) {
-						noStroke();
-						float c = map((i + j + offset), 0, circles * 2, 0, 255) % 256;
-						fill(c, 255, 255);
-						float x = map(i, 0, circles - 1, d / 2.0f, width - (d / 2.0f)); 
-						float y = map(j, 0, circles - 1, d / 2.0f, width - (d / 2.0f)); 
-						circle(x, y, d);
-					}
+				background(0);
+				int circles = (int) (mouseX / 20.f);
+
+				for (int i = 0; i < circles; i++) {
+					noStroke();
+					fill(map(i, 0, circles, 0, 255), 255, 255);
+					float circleWidth = width - map(i, 0, circles, 0, width - 50);
+					ellipse(width / 2, height / 2, circleWidth, circleWidth);
 				}
-				break;
+				
+			break;
+
 			case 3:
 				background(0);
-				colorMode(RGB);
-				float border = width * 0.1f;
-				for(int i = -5; i <= 5; i ++)
-				{
-					float x = map(i, -5, 5, border, width - border);
-					stroke(0, 255, 0);
-					line(x, border, x, height - border);
-					line(border, x, width - border, x);
-					fill(255);
-					text(i, x, border * 0.5f);
-					text(i, border * 0.5f, x);
+				int numCircles = (int) (mouseX / 20.f);
+				float circleWidth = width / (float) numCircles;
+
+
+				for (int i = 1; i < numCircles; i++) {
+					noStroke();
+					fill(map(i, 0, numCircles, 0, 255), 255, 255);
+					//maps x cordinate of each circle	
+					float x = map(i, 0, numCircles, 0, width);
+					circle(x, 250, circleWidth);
+					
 				}
+				
+			break;
+
 			case 4:
 				background(0);
-				stroke(255, 255, 255);	
-				float cx = width / 2;
-				float cy = height / 2;	
-				float radius = 200;		
-				int points = (int)map(mouseX, 1, width, 5, 20);
-				int sides = points * 2;
-				float px = cx;
-				float py = cy - radius; 
-				for(int i = 0 ; i <= sides ; i ++)
-				{
-					float r = (i % 2 == 0) ? radius : radius / 2; 
-					// float r = radius;
-					float theta = map(i, 0, sides, 0, TWO_PI);
-					float x = cx + sin(theta) * r;
-					float y = cy - cos(theta) * r;
-					
-					//circle(x, y, 20);
-					line(px, py, x, y);
-					px = x;
-					py = y;
+				numCircles = (int) (mouseX / 20.f);
+				circleWidth = width / (float) numCircles;
+
+				for(int row = 1; row < numCircles; row++) {
+					for(int col = 1; col < numCircles; col++) {
+						noStroke();
+						fill(map(col, 0, numCircles, 0, 255), 255, 255);
+						//maps x and y cordinates of each circle	
+						float x = map(row, 0, numCircles, 0, width);
+						float y = map(col, 0, numCircles, 0, height);
+						circle(x, y, circleWidth);
+					}
+
+				}
+				
+			break;
+
+			case 5:
+				background(0);
+				int numTiles = (int) (mouseX / 20.f);
+				float tileWidth = width / (float) numTiles;
+				
+				for(int row = 0; row < numTiles; row++) {
+					for(int col = 0; col < numTiles; col++) {
+						noStroke();
+						
+						//maps x and y cordinates of each tile	
+						float x = map(row, 0, numTiles, 0, width);
+						float y = map(col, 0, numTiles, 0, height);
+						if(x % 2 == 0) {
+							fill(map(row, 0, numTiles, 255, 255), 255, 255);
+						}
+						else {
+							fill(map(row, 0, numTiles, 100, 100), 255, 255);
+						}
+						square(x, y, tileWidth);
+					}
+				
 				}
 
-				// map(a,b,c,d,e);
-				// a = inputvalue
-				// b - c - start and end of the first range
-				// d, e 0 - start and and of the end range
-
-				// map(-2, 10, 90, 200, 233);
+			break;
 
 		}
 	}
 }
+
