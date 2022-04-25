@@ -36,8 +36,8 @@ public class Audio1 extends PApplet
 
     public void settings()
     {
-        //size(1024, 1000, P3D);
-        fullScreen(P3D, SPAN);
+        size(1024, 1000, P3D);
+        //fullScreen(P3D, SPAN);
     }
 
     public void setup()
@@ -82,6 +82,7 @@ public class Audio1 extends PApplet
 
         switch (mode) {
 			case 0:
+            {
                 background(0);
                 for(int i = 0 ; i < ab.size() ; i ++)
                 {
@@ -92,18 +93,23 @@ public class Audio1 extends PApplet
                     line(i, halfH + f, i, halfH - f);                    
                 }
                 break;
-        case 1:
-            background(0);
-            for(int i = 0 ; i < ab.size() ; i ++)
-            {
-                //float c = map(ab.get(i), -1, 1, 0, 255);
-                float c = map(i, 0, ab.size(), 0, 255);
-                stroke(c, 255, 255);
-                float f = lerpedBuffer[i] * halfH * 4.0f;
-                line(i, halfH + f, halfH - f, i);                    
             }
-            break;
-        case 2:
+
+            case 1:
+            {
+                background(0);
+                for(int i = 0 ; i < ab.size() ; i ++)
+                {
+                    //float c = map(ab.get(i), -1, 1, 0, 255);
+                    float c = map(i, 0, ab.size(), 0, 255);
+                    stroke(c, 255, 255);
+                    float f = lerpedBuffer[i] * halfH * 4.0f;
+                    line(i, halfH + f, halfH - f, i);                    
+                }
+                break;
+            }
+
+            case 2:
             {
                     float c = map(smoothedAmplitude, 0, 0.5f, 0, 255);
                     background(0, 0, 0, 10);
@@ -127,36 +133,36 @@ public class Audio1 extends PApplet
                         py = y;
                     }
             }
-        case 3:
-            background(0);
-            strokeWeight(2);
-            noFill();
-            float r = map(smoothedAmplitude, 0, 0.5f, 100, 2000);
-            float c = map(smoothedAmplitude, 0, 0.5f, 0, 255);
-            stroke(c, 255, 255);
-            circle(cx, cy, r);
-        case 4:
-        
-            background(0);
-            strokeWeight(2);
-            for(int i = 0 ; i < ab.size() ; i +=10)
+
+            case 3:
             {
-                //float c = map(ab.get(i), -1, 1, 0, 255);
-                float cc = map(i, 0, ab.size(), 0, 255);
-                stroke(cc, 255, 255);
-                float f = lerpedBuffer[i] * halfH * 4.0f;
-                line(i, halfH + f, i, halfH - f);
-                fill(cc);
-                circle(i, halfH + f, 5);                    
-                circle(i, halfH - f, 5);                    
+                background(0);
+                strokeWeight(2);
+                noFill();
+                float r = map(smoothedAmplitude, 0, 0.5f, 100, 2000);
+                float c = map(smoothedAmplitude, 0, 0.5f, 0, 255);
+                stroke(c, 255, 255);
+                circle(cx, cy, r);
             }
-            break;
-
+            case 4:
+            {
+                background(0);
+                strokeWeight(2);
+                for(int i = 0 ; i < ab.size() ; i +=10)
+                {
+                    //float c = map(ab.get(i), -1, 1, 0, 255);
+                    float cc = map(i, 0, ab.size(), 0, 255);
+                    stroke(cc, 255, 255);
+                    float f = lerpedBuffer[i] * halfH * 4.0f;
+                    line(i, halfH + f, i, halfH - f);
+                    fill(cc);
+                    circle(i, halfH + f, 5);                    
+                    circle(i, halfH - f, 5);                    
+                }
+                break;
+            }
         }
-        
-
-
-        
+            
         // Other examples we made in the class
         /*
         stroke(255);

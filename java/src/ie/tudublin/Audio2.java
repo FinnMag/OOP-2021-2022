@@ -17,9 +17,9 @@ Science is not supposed to give meaning to ones life or the reason behind their 
 public class Audio2 extends PApplet
 {
     Minim minim;
-    AudioPlayer ap;
-    AudioInput ai;
-    AudioBuffer ab;
+    AudioPlayer audioPlayer;
+    AudioInput audioInput;
+    AudioBuffer audioBuffer;
 
     int mode = 0;
 
@@ -35,11 +35,11 @@ public class Audio2 extends PApplet
 			mode = key - '0';
 		}
 		if (keyCode == ' ') {
-            if (ap.isPlaying()) {
-                ap.pause();
+            if (audioPlayer.isPlaying()) {
+                audioPlayer.pause();
             } else {
-                ap.rewind();
-                ap.play();
+                audioPlayer.rewind();
+                audioPlayer.play();
             }
         }
 	}
@@ -54,11 +54,11 @@ public class Audio2 extends PApplet
     {
         minim = new Minim(this);
         // Uncomment this to use the microphone
-        ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-        ab = ai.mix; 
-        //ap = minim.loadFile("heroplanet.mp3", 1024);
-        //ap.play();
-        //ab = ap.mix;
+        //audioInput = minim.getLineIn(Minim.MONO, width, 44100, 16);
+        //audioBuffer = audioInput.mix; 
+        audioPlayer = minim.loadFile("heroplanet.mp3", 1024);
+        audioPlayer.play();
+        audioBuffer = audioPlayer.mix;
         colorMode(RGB);
 
         fft = new FFT(1024, 44100);
@@ -76,13 +76,13 @@ public class Audio2 extends PApplet
         background(0);
         stroke(255);
         float halfH = height / 2;
-        for(int i = 0 ; i < ab.size() ; i ++)
+        for(int i = 0 ; i < audioBuffer.size() ; i ++)
         {
-            line(i, halfH, i, halfH + ab.get(i) * halfH);
+            line(i, halfH, i, halfH + audioBuffer.get(i) * halfH);
         }
 
         fft.window(FFT.HAMMING);
-        fft.forward(ab);
+        fft.forward(audioBuffer);
 
         stroke(0, 255, 0);
         for(int i = 0 ; i < fft.specSize(); i ++)
@@ -109,5 +109,5 @@ public class Audio2 extends PApplet
         fill(255);
         text("Freq: " + freq, 100, 200);
 
-    }        
+    }   
 }
